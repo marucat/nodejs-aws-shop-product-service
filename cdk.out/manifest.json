@@ -1,0 +1,361 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "ProductServiceStackProductsList68384C03.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ProductServiceStackProductsList68384C03.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ProductServiceStackProductsList68384C03": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ProductServiceStackProductsList68384C03.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/abf4e0a7592b1a71d5d743a938691fa19e369d6ad189fc45b3a3e7d33e76556a.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ProductServiceStackProductsList68384C03.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ProductServiceStackProductsList68384C03.assets"
+      ],
+      "metadata": {
+        "/ProductServiceStack/ProductsList/GetProductListHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetProductListHandlerServiceRole17B1DFB2"
+          }
+        ],
+        "/ProductServiceStack/ProductsList/GetProductListHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetProductListHandler71880684"
+          }
+        ],
+        "/ProductServiceStack/ProductsList/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ProductServiceStack/ProductsList/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ProductServiceStack/ProductsList/Exports/Output{\"Fn::GetAtt\":[\"GetProductListHandler71880684\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttGetProductListHandler71880684ArnABBBE693"
+          }
+        ],
+        "/ProductServiceStack/ProductsList/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ProductServiceStack/ProductsList/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ProductServiceStack/ProductsList"
+    },
+    "ProductServiceStackProductsById49A02569.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ProductServiceStackProductsById49A02569.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ProductServiceStackProductsById49A02569": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ProductServiceStackProductsById49A02569.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4ee67d115065eda26a1874f4a8b7774ec558e0b3c52ed6e9dc5a7c37deb2a5dd.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ProductServiceStackProductsById49A02569.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ProductServiceStackProductsById49A02569.assets"
+      ],
+      "metadata": {
+        "/ProductServiceStack/ProductsById/GetProductsByIdHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetProductsByIdHandlerServiceRoleCA2ECFCD"
+          }
+        ],
+        "/ProductServiceStack/ProductsById/GetProductsByIdHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetProductsByIdHandler083EBF55"
+          }
+        ],
+        "/ProductServiceStack/ProductsById/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ProductServiceStack/ProductsById/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ProductServiceStack/ProductsById/Exports/Output{\"Fn::GetAtt\":[\"GetProductsByIdHandler083EBF55\",\"Arn\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttGetProductsByIdHandler083EBF55ArnD4DD3258"
+          }
+        ],
+        "/ProductServiceStack/ProductsById/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ProductServiceStack/ProductsById/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ProductServiceStack/ProductsById"
+    },
+    "ProductServiceStackAPIGatewayC75F08B8.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ProductServiceStackAPIGatewayC75F08B8.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ProductServiceStackAPIGatewayC75F08B8": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ProductServiceStackAPIGatewayC75F08B8.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f16757c4e9cf9d2adb92bdbd2768eb33971ef1051c90e22d607f433ad0e800e.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ProductServiceStackAPIGatewayC75F08B8.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ProductServiceStackProductsList68384C03",
+        "ProductServiceStackProductsById49A02569",
+        "ProductServiceStackAPIGatewayC75F08B8.assets"
+      ],
+      "metadata": {
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiFE734E24"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiDeployment696F4D07be1bda4e4455d8afc6c389fd2e108f24"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiDeploymentStageprod7C4CB6D5"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiEndpointE57F6293"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproducts612C39F6"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/GET/ApiPermission.ProductServiceStackAPIGatewayProductServiceApi4A638138.GET..products": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproductsGETApiPermissionProductServiceStackAPIGatewayProductServiceApi4A638138GETproducts642628F1"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/GET/ApiPermission.Test.ProductServiceStackAPIGatewayProductServiceApi4A638138.GET..products": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproductsGETApiPermissionTestProductServiceStackAPIGatewayProductServiceApi4A638138GETproductsA7F36BB9"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproductsGET2C58D7CE"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/{productId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproductsproductId622E148C"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/{productId}/GET/ApiPermission.ProductServiceStackAPIGatewayProductServiceApi4A638138.GET..products.{productId}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproductsproductIdGETApiPermissionProductServiceStackAPIGatewayProductServiceApi4A638138GETproductsproductId5EC8E0D8"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/{productId}/GET/ApiPermission.Test.ProductServiceStackAPIGatewayProductServiceApi4A638138.GET..products.{productId}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproductsproductIdGETApiPermissionTestProductServiceStackAPIGatewayProductServiceApi4A638138GETproductsproductIdDDF11E3A"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/ProductServiceApi/Default/products/{productId}/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProductServiceApiproductsproductIdGET139D5998"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ProductServiceStack/APIGateway/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ProductServiceStack/APIGateway"
+    },
+    "ProductServiceStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ProductServiceStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ProductServiceStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ProductServiceStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/719fd02521a609e23216108a2ed70d1fd6aa427f1c7349bc485c794501f43742.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ProductServiceStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ProductServiceStack.assets"
+      ],
+      "metadata": {
+        "/ProductServiceStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ProductServiceStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ProductServiceStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ProductServiceStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ProductServiceStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
