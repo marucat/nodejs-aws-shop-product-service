@@ -17,7 +17,7 @@ class GetProducts extends Stack {
     this.get_product_list = new aws_lambda.Function(
         this, 'GetProductListHandler',
         {
-            runtime: aws_lambda.Runtime.NODEJS_18_X,
+            runtime: aws_lambda.Runtime.NODEJS_16_X,
             code: aws_lambda.Code.fromAsset('product_service/lambda_func/'),
             handler: 'product_list.handler'
         }
