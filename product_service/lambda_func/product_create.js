@@ -51,7 +51,7 @@ exports.handler = async function(event, context, callback) {
         await ddbDocClient.put(paramsS).promise();
         
         return {
-            "statusCode": 200,
+            "statusCode": 201,
             "headers": {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET",
