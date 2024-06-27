@@ -6,7 +6,7 @@ AWS.config.update({ region: "us-east-1" });
 const ddbDocClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async function(event, context, callback) {
-    const productData = event.body;
+    const productData = event.body ? JSON.parse(event.body) : {};
 
     console.log('Create product with the following data: ', JSON.stringify(productData));
     
