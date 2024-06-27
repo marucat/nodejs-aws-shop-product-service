@@ -6,6 +6,9 @@ const ddbDocClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async function(event, context, callback) {
     const product_id = event.pathParameters.productId;
+
+    console.log('Get product by ID: ', product_id);
+
     const paramsP = {
         TableName: "products",
         Key: {

@@ -1,50 +1,54 @@
 AWS = require("aws-sdk");
-const { v4: uuidv4 } = require('uuid');
-const Joi = require('joi');
+const { randomUUID } = require('crypto');
 const errorHandler = require('./errorHandler');
 
 AWS.config.update({ region: "us-east-1" });
 const ddbDocClient = new AWS.DynamoDB.DocumentClient();
 
-const schema = Joi.object({
-    title: Joi.string()
-        .required(),
-
-    description: Joi.string(),
-
-    price: Joi.number()
-        .integer()
-})
-
 exports.handler = async function(event, context, callback) {
     const productData = event.body;
+
+    console.log('Create product with the following data: ', JSON.stringify(productData));
     
     try {
-        const productValidatedData = await schema.validateAsync(productData);
+        if(
+            !(
+                typeof productData?.title === 'string'
+                && productData.title.length
+                && (
+                    (
+                        typeof productData?.description === 'string'
+                        && productData.description?.length
+                    ) || !productData?.description
+                )
+                && typeof productData?.price === 'number'
+                && productData.price >= 0
+            )
+        ) {
+            return errorHandler({message: "Check your input properly"}, 400);
+        }
 
-        const idGenerated = uuidv4();
+        const idGenerated = randomUUID();
+        const addedProduct = {
+            id: idGenerated,
+            title: productData.title,
+            price: productData.price,
+            description: productData.description,
+        };
+        const addedStock = {
+            id: idGenerated,
+            count: productData.count || 0
+        };
         const paramsP = {
             TableName: "products",
-            Item: {
-                id: idGenerated,
-                title: productValidatedData.title,
-                price: productValidatedData.price,
-                description: productValidatedData.description,
-            }
+            Item: addedProduct
         };
         const paramsS = {
             TableName: "stocks",
-            Item: {
-                id: idGenerated,
-                count: productValidatedData.count || 0
-            },
+            Item: addedStock
         };
-        const product = await ddbDocClient.put(paramsP).promise();
-        const stock = await ddbDocClient.put(paramsS).promise();
-        const dataProduct = product.Item || null;
-        const dataStock = stock.Item || null;
-        
-        if(!dataProduct || !dataStock) return errorHandler({message: "Something went wrong"}, 500);
+        await ddbDocClient.put(paramsP).promise();
+        await ddbDocClient.put(paramsS).promise();
         
         return {
             "statusCode": 200,
@@ -54,8 +58,8 @@ exports.handler = async function(event, context, callback) {
                 "Content-Type": "application/json"
             },
             "body": JSON.stringify({
-                ...dataProduct,
-                ...dataStock,
+                ...addedProduct,
+                ...addedStock,
             })
         };
     } catch (err) {

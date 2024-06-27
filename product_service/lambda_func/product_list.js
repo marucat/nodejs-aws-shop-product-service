@@ -4,6 +4,8 @@ AWS.config.update({ region: "us-east-1" });
 const ddbDocClient = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async function(event, context, callback) {
+    console.log('Get product list');
+    
     const paramsP = {
         TableName: "products",
     };
