@@ -1,33 +1,35 @@
-exports.handler = async function(event, context, callback) {
-    const products = [
-        {
-            id: '1',
-            title: 'Product 1',
-            description: 'Product 1 description',
-            price: 100,
-            count: 5
-        },
-        {
-            id: '2',
-            title: 'Product 2',
-            description: 'Product 2 description',
-            price: 200,
-            count: 10
-        },
-        {
-            id: '3',
-            title: 'Product 3',
-            description: 'Product 3 description',
-            price: 300,
-            count: 15
-        }
-    ];
-    const product_id = event.pathParameters.productId;
-    const product = products.find((pro) => {
-        return pro.id === product_id;
-    }) || null;
+AWS = require("aws-sdk");
+const errorHandler = require('./errorHandler');
 
-    if(product) {
+AWS.config.update({ region: "us-east-1" });
+const ddbDocClient = new AWS.DynamoDB.DocumentClient();
+
+exports.handler = async function(event, context, callback) {
+    const product_id = event.pathParameters.productId;
+
+    console.log('Get product by ID: ', product_id);
+
+    const paramsP = {
+        TableName: "products",
+        Key: {
+            id: product_id
+        }
+    };
+    const paramsS = {
+        TableName: "stocks",
+        Key: {
+            id: product_id
+        },
+    };
+    
+    try {
+        const product = await ddbDocClient.get(paramsP).promise();
+        const stock = await ddbDocClient.get(paramsS).promise();
+        const dataProduct = product.Item || null;
+        const dataStock = stock.Item || null;
+        
+        if(!dataProduct || !dataStock) return errorHandler({message: "Product not found"});
+        
         return {
             "statusCode": 200,
             "headers": {
@@ -35,18 +37,12 @@ exports.handler = async function(event, context, callback) {
                 "Access-Control-Allow-Methods": "GET",
                 "Content-Type": "application/json"
             },
-            "body": JSON.stringify(product)
+            "body": JSON.stringify({
+                ...dataProduct,
+                ...dataStock,
+            })
         };
-    } else {
-        return {
-            "statusCode": 404,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET",
-                "Content-Type": "application/json"
-            },
-            "body": JSON.stringify({message: 'Product not found'})
-        };
+    } catch (err) {
+        return errorHandler(err, 500);
     }
-
 };
