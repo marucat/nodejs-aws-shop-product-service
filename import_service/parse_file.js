@@ -3,8 +3,8 @@ const {
     aws_lambda,
     aws_apigateway,
     aws_s3_notifications,
-    aws_s3,
 } = require('aws-cdk-lib');
+const s3 = require('aws-cdk-lib/aws-s3');
 
 class ParseFile extends Stack {
   /**
@@ -17,7 +17,7 @@ class ParseFile extends Stack {
     super(scope, id, props);
 
     const { bucket_name } = props;
-    const bucket = aws_s3.Bucket.fromBucketName(this, 'ImportBucket', bucket_name);
+    const bucket = s3.Bucket.fromBucketName(this, 'ImportBucket', bucket_name);
 
     this.import_file_parser = new aws_lambda.Function(
         this, 'ParseFileHandler',
@@ -36,7 +36,7 @@ class ParseFile extends Stack {
     bucket.grantDelete(this.import_file_parser);
 
     const notification = new aws_s3_notifications.LambdaDestination(this.import_file_parser);
-    bucket.addEventNotification(aws_s3.EventType.OBJECT_CREATED, notification, {
+    bucket.addEventNotification(s3.EventType.OBJECT_CREATED, notification, {
       prefix: 'uploaded/'
     });
   }

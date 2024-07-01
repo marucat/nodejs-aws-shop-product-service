@@ -1,9 +1,9 @@
 const { 
     Stack,
     aws_lambda,
-    aws_apigateway,
-    aws_s3
+    aws_apigateway
 } = require('aws-cdk-lib');
+const s3 = require('aws-cdk-lib/aws-s3');
 
 class ImportService extends Stack {
   /**
@@ -16,7 +16,7 @@ class ImportService extends Stack {
     super(scope, id, props);
 
     const { bucket_name } = props;
-    const bucket = aws_s3.Bucket.fromBucketName(this, 'ImportBucket', bucket_name);
+    const bucket = s3.Bucket.fromBucketName(this, 'ImportBucket', bucket_name);
 
     this.import_service = new aws_lambda.Function(
         this, 'ImportServiceHandler',
