@@ -1,12 +1,13 @@
-const s3 = require('aws-cdk-lib/aws-s3');
+const S3 = require('aws-sdk/clients/s3');
 
 const errorHandler = require('./errorHandler');
 
 exports.handler = async function(event, context) {
     try {
+        var s3 = new S3();
         const bucket_name = process.env.BUCKET_NAME;
     
-        event.Records.array.forEach(element => {
+        event.Records.array.forEach(record => {
             const key = record.s3.object.key;
     
             const params = {
