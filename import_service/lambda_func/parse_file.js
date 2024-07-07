@@ -16,13 +16,14 @@ const csvParser = async (stream, sqsQueueUrl) => {
   return new Promise((res, rej) => {
     stream.pipe(csv())
       .on('data', async (data) => {
+        console.log('SQS send message data', data);
         const commandSqsSendMes = new SendMessageCommand({
           QueueUrl: sqsQueueUrl,
-          MessageBody: data,
+          MessageBody: JSON.stringify(data),
         });
       
         const response = await sqsClient.send(commandSqsSendMes);
-        console.log('SQS send message response', response);
+        console.log('SQS send message response',response.MessageId);
         return response;
       })
       .on('end', () => {
