@@ -1,5 +1,5 @@
 {
-  "app": "node bin/product_service.js",
+  "app": "node bin/services.js",
   "watch": {
     "include": [
       "**"
