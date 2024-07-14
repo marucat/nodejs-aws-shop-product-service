@@ -4,6 +4,7 @@ const { ApiGateway } = require('./api_gateway');
 const { GetProducts } = require('./get_products');
 const { CreateProduct } = require('./create_product');
 const { ProductsById } = require('./get_product_by_id');
+const { BatchProducts } = require('./batch_products');
 
 class ProductServiceStack extends Stack {
   /**
@@ -15,6 +16,7 @@ class ProductServiceStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
+    new BatchProducts(this, 'BatchProducts');
     const get_product_list_lbd = new GetProducts(this, 'ProductsList');
     const create_product_lbd = new CreateProduct(this, 'ProductCreate');
     const get_product_by_id_lbd = new ProductsById(this, 'ProductsById');

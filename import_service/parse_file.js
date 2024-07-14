@@ -1,6 +1,7 @@
 const {
     Stack,
     aws_lambda,
+    aws_sqs,
 } = require('aws-cdk-lib');
 const s3 = require('aws-cdk-lib/aws-s3');
 const s3n = require('aws-cdk-lib/aws-s3-notifications');
@@ -16,6 +17,9 @@ class ParseFile extends Stack {
     super(scope, id, props);
 
     const { bucket } = props;
+    const catalogItemsQueve = aws_sqs.Queue.fromQueueArn(this, 'CatalogItemsQueue', 
+      'arn:aws:sqs:us-east-1:211125562846:catalogItemsQueue'
+    )
 
     this.import_file_parser = new aws_lambda.Function(
         this, 'ParseFileHandler',
@@ -32,6 +36,8 @@ class ParseFile extends Stack {
     bucket.grantReadWrite(this.import_file_parser);
     bucket.grantPut(this.import_file_parser);
     bucket.grantDelete(this.import_file_parser);
+
+    catalogItemsQueve.grantSendMessages(this.import_file_parser);
 
     bucket.addEventNotification(
       s3.EventType.OBJECT_CREATED,

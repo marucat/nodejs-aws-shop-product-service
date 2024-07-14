@@ -4,17 +4,27 @@ const {
   GetObjectCommand,
   S3Client,
 } = require('@aws-sdk/client-s3');
+const { SQSClient, GetQueueUrlCommand, SendMessageCommand } = require('@aws-sdk/client-sqs');
 const csv = require('csv-parser');
 
 const errorHandler = require('./errorHandler');
 
 const client = new S3Client({});
+const sqsClient = new SQSClient({});
 
-const csvParser = async (stream) => {
+const csvParser = async (stream, sqsQueueUrl) => {
   return new Promise((res, rej) => {
     stream.pipe(csv())
-      .on('data', (data) => {
-        console.log(data);
+      .on('data', async (data) => {
+        console.log('SQS send message data', data);
+        const commandSqsSendMes = new SendMessageCommand({
+          QueueUrl: sqsQueueUrl,
+          MessageBody: JSON.stringify(data),
+        });
+      
+        const response = await sqsClient.send(commandSqsSendMes);
+        console.log('SQS send message response',response.MessageId);
+        return response;
       })
       .on('end', () => {
         res();
@@ -28,6 +38,10 @@ const csvParser = async (stream) => {
 exports.handler = async function(event, context) {
     try {
         const bucket_name = process.env.BUCKET_NAME;
+
+        const commandSqs = new GetQueueUrlCommand({ QueueName: 'catalogItemsQueue' });
+        const responseSqs = await sqsClient.send(commandSqs);
+        const sqsQueueUrl = responseSqs.QueueUrl;
     
         for (const record of event.Records) {
             const key = record.s3.object.key;
@@ -46,7 +60,7 @@ exports.handler = async function(event, context) {
             console.log('File rows:');
             if(getResponse.Body) {
                 const stream = getResponse.Body;
-                await csvParser(stream);
+                await csvParser(stream, sqsQueueUrl);
             } else {
                 throw new Error('Empty body');
             }
