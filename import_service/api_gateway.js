@@ -18,12 +18,24 @@ class ApiGateway extends Stack {
       import_service_fn = aws_lambda,
     } = props;
 
+    const basicAuthorizerLambda = aws_lambda.Function.fromFunctionName(this, 'authFunction', 'AuthFunction');
+
     const api = new aws_apigateway.RestApi(this, 'ImportApi', {
         restApiName: 'Import Service'
     });
 
+    const authorizer = new aws_apigateway.TokenAuthorizer(this, 'BasicAuthorizer', {
+      identitySource: 'method.request.header.Authorization',
+      handler: basicAuthorizerLambda
+    });
+
     const import_resource = api.root.addResource('import');
-    import_resource.addMethod('GET', new aws_apigateway.LambdaIntegration(import_service_fn));
+    import_resource.addMethod('GET', new aws_apigateway.LambdaIntegration(import_service_fn),
+      {
+        authorizer: authorizer,
+        authorizationType: aws_apigateway.AuthorizationType.CUSTOM
+      }
+    );
   }
 }
 
