@@ -3,7 +3,7 @@
 const cdk = require('aws-cdk-lib');
 const { ProductServiceStack } = require('../product_service/lambda_deployment');
 const { ImportServiceStack } = require('../import_service/lambda_deployment');
-const { AuthorizationServiceStack } = require('../authotization_service/lambda_deployment');
+const { AuthorizationServiceStack } = require('../authorization_service/lambda_deployment');
 
 const app = new cdk.App();
 new ProductServiceStack(app, 'ProductServiceStack', {

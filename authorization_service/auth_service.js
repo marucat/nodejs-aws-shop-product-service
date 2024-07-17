@@ -1,7 +1,9 @@
 const {
   Stack,
   aws_lambda,
+  CfnOutput,
 } = require('aws-cdk-lib');
+const { ServicePrincipal } = require('aws-cdk-lib/aws-iam');
 require('dotenv').config();
 
 class AuthorizationService extends Stack {
@@ -29,6 +31,20 @@ constructor(scope, id, props) {
           functionName: 'AuthFunction'
       }
   );
+
+
+  this.authorization_service.grantInvoke(
+    new ServicePrincipal("apigateway.amazonaws.com")
+  );
+
+  new CfnOutput(this, "BasicAuthorizer", {
+    value: this.authorization_service.functionArn,
+    exportName: "BasicAuthorizerArn",
+  });
+  new CfnOutput(this, "BasicAuthorizerRole", {
+    value: this.authorization_service.role.roleArn,
+    exportName: "BasicAuthorizerArnRole",
+  });
 }
 }
 

@@ -1,5 +1,5 @@
 const base64 = require('base-64');
-const errorHandler = require('./errorHandler');
+const { Effect } = require('aws-cdk-lib/aws-iam');
 
 // Help function to generate an IAM policy
 var generatePolicy = function(principalId, effect, resource) {
@@ -29,7 +29,7 @@ var generatePolicy = function(principalId, effect, resource) {
 exports.handler = async function(event, context) {
   console.log('event',event);
   const authorizationHeader = event?.authorizationToken;
-  if(!authorizationHeader) return errorHandler({message: 'Unauthorised'}, 401);
+  if(!authorizationHeader) return generatePolicy("user", Effect.DENY, event.methodArn);
 
   const encodedCredentials = authorizationHeader.split(' ')[1];
   const decodedCredentials = base64.decode(encodedCredentials);
@@ -38,10 +38,11 @@ exports.handler = async function(event, context) {
   const storedPassword = process.env[username];
 
   if(storedPassword && storedPassword == password) {
-    const policy = generatePolicy(username, 'Allow', event.methodArn);
+    const policy = generatePolicy(username, Effect.ALLOW, event.methodArn);
     console.log('policy: ', policy);
     return policy;
   } else {
-    return errorHandler({message: 'Forbidden'}, 403);
+    console.log("Bad auth");
+    return generatePolicy("user", Effect.DENY, event.methodArn);
   }
 };
