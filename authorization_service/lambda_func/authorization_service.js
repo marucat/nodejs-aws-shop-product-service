@@ -15,13 +15,6 @@ const generatePolicy = (
           Action: "execute-api:Invoke",
           Effect: effect,
           Resource: resource,
-        },
-        {
-          'Effect': 'Allow',
-          'Principal': {
-              'Service': ['apigateway.amazonaws.com','lambda.amazonaws.com']
-          },
-          'Action': 'sts:AssumeRole'
         }
       ],
     },
@@ -32,8 +25,12 @@ const generatePolicy = (
 
 exports.handler = async function(event, context) {
   console.log('event',event);
-  const authorizationHeader = event?.headers?.authorization;
-  if(!authorizationHeader) return generatePolicy('username', 'Deny', event.methodArn);
+  const authorizationHeader = event?.authorizationToken;
+  if(!authorizationHeader) {
+    const policy = generatePolicy('username', 'Deny', event.methodArn);
+    console.log('policy: ', JSON.stringify(policy));
+    return policy;
+  }
 
   const encodedCredentials = authorizationHeader.split(' ')[1];
   const decodedCredentials = base64.decode(encodedCredentials);
@@ -43,10 +40,11 @@ exports.handler = async function(event, context) {
 
   if(storedPassword && storedPassword == password) {
     const policy = generatePolicy(username, 'Allow', event.methodArn);
-    console.log('policy: ', policy);
+    console.log('policy: ', JSON.stringify(policy));
     return policy;
   } else {
-    console.log("Bad auth");
-    return generatePolicy(username, 'Deny', event.methodArn);
+    const policy = generatePolicy(username, 'Deny', event.methodArn);
+    console.log("Bad auth", JSON.stringify(policy));
+    return policy;
   }
 };

@@ -36,9 +36,9 @@ class ApiGateway extends Stack {
       'AuthFunction'
     );
 
-    const authorizer = new aws_apigateway.RequestAuthorizer(this, 'APIGatewayAuthorizer', {
+    const authorizer = new aws_apigateway.TokenAuthorizer(this, 'APIGatewayAuthorizer', {
       handler: basicAuthorizerLambda,
-      identitySources: [aws_apigateway.IdentitySource.header('authorization')],
+      identitySource: aws_apigateway.IdentitySource.header('authorization'),
       resultsCacheTtl: Duration.seconds(0),
     });
 
