@@ -32,19 +32,9 @@ constructor(scope, id, props) {
       }
   );
 
-
   this.authorization_service.grantInvoke(
-    new ServicePrincipal("apigateway.amazonaws.com")
+    new ServicePrincipal('apigateway.amazonaws.com')
   );
-
-  new CfnOutput(this, "BasicAuthorizer", {
-    value: this.authorization_service.functionArn,
-    exportName: "BasicAuthorizerArn",
-  });
-  new CfnOutput(this, "BasicAuthorizerRole", {
-    value: this.authorization_service.role.roleArn,
-    exportName: "BasicAuthorizerArnRole",
-  });
 }
 }
 

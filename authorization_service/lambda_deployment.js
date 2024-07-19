@@ -1,4 +1,5 @@
-const { Stack } = require('aws-cdk-lib');
+const { Stack, aws_ass } = require('aws-cdk-lib');
+const { Template } = require('aws-cdk-lib/assertions');
 
 const { AuthorizationService } = require('./auth_service');
 
@@ -12,7 +13,8 @@ class AuthorizationServiceStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
-    new AuthorizationService(this, 'AuthorizationService');
+    const stack = new AuthorizationService(this, 'AuthorizationService');
+    const template = Template.fromStack(stack);
   }
 }
 

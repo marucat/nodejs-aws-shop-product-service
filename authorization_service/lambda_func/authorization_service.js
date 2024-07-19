@@ -1,35 +1,39 @@
 const base64 = require('base-64');
-const { Effect } = require('aws-cdk-lib/aws-iam');
 
 // Help function to generate an IAM policy
-var generatePolicy = function(principalId, effect, resource) {
-  // Required output:
-  var authResponse = {};
-  authResponse.principalId = principalId;
-  if (effect && resource) {
-      var policyDocument = {};
-      policyDocument.Version = '2012-10-17'; // default version
-      policyDocument.Statement = [];
-      var statementOne = {};
-      statementOne.Action = 'execute-api:Invoke'; // default action
-      statementOne.Effect = effect;
-      statementOne.Resource = resource;
-      policyDocument.Statement[0] = statementOne;
-      authResponse.policyDocument = policyDocument;
-  }
-  // Optional output with custom properties of the String, Number or Boolean type.
-  // authResponse.context = {
-  //     "stringKey": "stringval",
-  //     "numberKey": 123,
-  //     "booleanKey": true
-  // };
+const generatePolicy = (
+  principalId,
+  effect,
+  resource
+) => {
+  const authResponse = {
+    principalId,
+    policyDocument: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Action: "execute-api:Invoke",
+          Effect: effect,
+          Resource: resource,
+        },
+        {
+          'Effect': 'Allow',
+          'Principal': {
+              'Service': ['apigateway.amazonaws.com','lambda.amazonaws.com']
+          },
+          'Action': 'sts:AssumeRole'
+        }
+      ],
+    },
+  };
+
   return authResponse;
-}
+};
 
 exports.handler = async function(event, context) {
   console.log('event',event);
-  const authorizationHeader = event?.authorizationToken;
-  if(!authorizationHeader) return generatePolicy("user", Effect.DENY, event.methodArn);
+  const authorizationHeader = event?.headers?.authorization;
+  if(!authorizationHeader) return generatePolicy('username', 'Deny', event.methodArn);
 
   const encodedCredentials = authorizationHeader.split(' ')[1];
   const decodedCredentials = base64.decode(encodedCredentials);
@@ -38,11 +42,11 @@ exports.handler = async function(event, context) {
   const storedPassword = process.env[username];
 
   if(storedPassword && storedPassword == password) {
-    const policy = generatePolicy(username, Effect.ALLOW, event.methodArn);
+    const policy = generatePolicy(username, 'Allow', event.methodArn);
     console.log('policy: ', policy);
     return policy;
   } else {
     console.log("Bad auth");
-    return generatePolicy("user", Effect.DENY, event.methodArn);
+    return generatePolicy(username, 'Deny', event.methodArn);
   }
 };

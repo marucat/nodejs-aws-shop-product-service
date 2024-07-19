@@ -34,7 +34,8 @@ exports.handler = async function(event, context) {
             "statusCode": 201,
             "headers": {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+                "Access-Control-Allow-Methods": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
+                "Access-Control-Allow-Credentials": true,
                 "Content-Type": "application/json"
             },
             "body": signed_url
